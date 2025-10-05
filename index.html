@@ -3,140 +3,90 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ZAMA Quest Live</title>
+  <title>ZAMA Quest Live – Pro Dashboard</title>
   <style>
     body {
-      margin: 0;
-      font-family: "Poppins", Arial, sans-serif;
+      font-family: "Poppins", sans-serif;
       background: radial-gradient(circle at top left, #0f172a, #000);
-      color: #e6f0ff;
+      color: #e2e8f0;
+      text-align: center;
+      margin: 0;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      height: 100vh;
+      align-items: center;
       overflow: hidden;
     }
 
     h1 {
-      font-size: 2.8rem;
-      background: linear-gradient(90deg, #22d3ee, #a78bfa, #22d3ee);
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #00d4ff, #b463ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: glow 3s ease-in-out infinite alternate;
-      margin-bottom: 10px;
+      animation: glowText 3s ease-in-out infinite alternate;
+      margin-bottom: 0;
     }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 8px #22d3ee, 0 0 15px #a78bfa; }
-      to { text-shadow: 0 0 20px #a78bfa, 0 0 30px #22d3ee; }
+    @keyframes glowText {
+      from { text-shadow: 0 0 10px #00d4ff, 0 0 15px #b463ff; }
+      to { text-shadow: 0 0 25px #b463ff, 0 0 35px #00d4ff; }
     }
 
-    .counter-box {
+    .circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: conic-gradient(#00d4ff var(--progress, 0%), #1e293b 0%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #b463ff;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 25px auto;
+      box-shadow: 0 0 30px #00d4ff44;
+      transition: all 0.5s ease;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #00d4ff, #b463ff);
+      color: #000;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 0 15px #00d4ff88;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #b463ff;
+    }
+
+    .leaderboard {
+      margin-top: 40px;
+      width: 320px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
-      padding: 30px 60px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px #22d3ee44;
-      text-align: center;
-      backdrop-filter: blur(8px);
-      animation: fadeIn 1s ease-in;
+      border-radius: 15px;
+      padding: 15px;
+      text-align: left;
+      box-shadow: 0 0 25px #00d4ff33;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .number {
-      font-size: 3rem;
-      font-weight: 700;
-      color: #22d3ee;
-      text-shadow: 0 0 12px #a78bfa;
-    }
-
-    button {
-      margin-top: 25px;
-      padding: 12px 22px;
-      background: linear-gradient(90deg, #22d3ee, #a78bfa);
-      border: none;
-      border-radius: 10px;
+    .player {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
       font-weight: 600;
-      font-size: 1rem;
-      color: #000;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 0 15px #22d3ee80;
     }
 
-    button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px #a78bfa;
-    }
+    .player:nth-child(1) { color: gold; }
+    .player:nth-child(2) { color: silver; }
+    .player:nth-child(3) { color: #cd7f32; }
 
-    footer {
-      position: fixed;
-      bottom: 10px;
-      width: 100%;
-      text-align: center;
-      color: #a0aec0;
-      font-size: 0.9rem;
-      letter-spacing: 0.3px;
-      text-shadow: 0 0 4px #22d3ee;
-    }
-
-    .dot {
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0.4;
-      animation: floatDots 18s linear infinite;
-    }
-
-    @keyframes floatDots {
-      0% { transform: translateY(0) scale(1); opacity: 0.4; }
-      50% { opacity: 0.8; }
-      100% { transform: translateY(-120vh) scale(0.5); opacity: 0; }
-    }
-  </style>
-</head>
-<body>
-  <div id="bg"></div>
-
-  <h1>🔥 ZAMA Quest Live 🔥</h1>
-
-  <div class="counter-box">
-    <div class="number" id="count">0</div>
-    <p>Participants joined the Quest!</p>
-    <button id="add">Join Now</button>
-  </div>
-
-  <footer>⚡ Live Demo by <span style="color:#22d3ee;">Mukesh4535</span> — AlphaKing Labs 💫</footer>
-
-  <script>
-    let count = 0;
-    const counter = document.getElementById("count");
-    const btn = document.getElementById("add");
-
-    btn.addEventListener("click", () => {
-      count++;
-      counter.textContent = count;
-      counter.style.color = count % 2 === 0 ? "#22d3ee" : "#a78bfa";
-    });
-
-    // Floating dots
-    const bg = document.getElementById('bg');
-    for (let i = 0; i < 25; i++) {
-      const dot = document.createElement('div');
-      const size = Math.random() * 12 + 6;
-      dot.classList.add('dot');
-      dot.style.width = `${size}px`;
-      dot.style.height = `${size}px`;
-      dot.style.left = `${Math.random() * 100}%`;
-      dot.style.bottom = `${Math.random() * 100}px`;
-      dot.style.background = Math.random() > 0.5 ? '#22d3ee' : '#a78bfa';
-      dot.style.animationDuration = `${10 + Math.random() * 15}s`;
-      bg.appendChild(dot);
-    }
-  </script>
-</body>
-</html>
+    .status {
+      margin-top: 20px;
